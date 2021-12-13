@@ -1,4 +1,3 @@
-Introduction 
 This folder contains all the scripts used for my MSc thesis
 
 Titel: Spatial welfare estimation in Uganda: Combining nighttime lights, road networks, and aridity for spatial welfare estimationWelfare mapping in Uganda 
@@ -8,7 +7,7 @@ Insufficient data on economic welfare in the developing world hinders research a
 
 
 The scripts are organized in 4 folders. 
-In the following a short description is given for each folder and the scripts. For more details see the comments in the scripts. All scripts with the suffix "_QGIS" have to be run in the QGIS python console. Scripts with the suffix "_python" can be run in a normal Python console. 
+In the following a short description is given for each folder and the script. For more details see the comments in the scripts. All scripts with the suffix "_QGIS" have to be run in the QGIS python console. Scripts with the suffix "_python" can be run in a normal Python console. 
 
 ###01_observations###
 This folder contains the scripts used to calculate, clean and merge the observations. 
@@ -80,24 +79,4 @@ Generates the observations for all the proxies in QGIS
 
 02_merge_data_export_python
 Merges the output from QGIS into a single CSV to use for the final map
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
