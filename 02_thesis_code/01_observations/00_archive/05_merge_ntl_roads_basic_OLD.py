@@ -1,0 +1,11 @@
+
+#merge all GIS output for ntl and road basic
+
+base_directory = 'C:/Users/Rob/Dropbox/My PC (DESKTOP-DP7OCOF)/Desktop/GIS_thesis/01_thesis_data/02_temp/01_NTL/grid_observations/'
+processing.run("native:mergevectorlayers", 
+##All layers obtained from analysis scripts 
+{'LAYERS':['C:/Users/Rob/Dropbox/My PC (DESKTOP-DP7OCOF)/Desktop/GIS_thesis/01_thesis_data/02_temp/01_NTL/grid_observations/vis3.csv', 'C:/Users/Rob/Dropbox/My PC (DESKTOP-DP7OCOF)/Desktop/GIS_thesis/01_thesis_data/02_temp/01_NTL/grid_observations/stab3.csv', 'C:/Users/Rob/Dropbox/My PC (DESKTOP-DP7OCOF)/Desktop/GIS_thesis/01_thesis_data/02_temp/01_NTL/grid_observations/vis4.csv', 'C:/Users/Rob/Dropbox/My PC (DESKTOP-DP7OCOF)/Desktop/GIS_thesis/01_thesis_data/02_temp/01_NTL/grid_observations/stab4.csv', 'C:/Users/Rob/Dropbox/My PC (DESKTOP-DP7OCOF)/Desktop/GIS_thesis/01_thesis_data/02_temp/01_NTL/grid_observations/vis5.csv', 'C:/Users/Rob/Dropbox/My PC (DESKTOP-DP7OCOF)/Desktop/GIS_thesis/01_thesis_data/02_temp/01_NTL/grid_observations/stab5.csv', 'C:/Users/Rob/Dropbox/My PC (DESKTOP-DP7OCOF)/Desktop/GIS_thesis/01_thesis_data/02_temp/01_NTL/grid_observations/vis6.csv', 'C:/Users/Rob/Dropbox/My PC (DESKTOP-DP7OCOF)/Desktop/GIS_thesis/01_thesis_data/02_temp/01_NTL/grid_observations/stab6.csv', 'C:/Users/Rob/Dropbox/My PC (DESKTOP-DP7OCOF)/Desktop/GIS_thesis/01_thesis_data/02_temp/01_NTL/grid_observations/vis7.csv', 'C:/Users/Rob/Dropbox/My PC (DESKTOP-DP7OCOF)/Desktop/GIS_thesis/01_thesis_data/02_temp/01_NTL/grid_observations/stab7.csv', 'C:/Users/Rob/Desktop/GIS_thesis/01_thesis_data/02_temp/02_road/road_aggregate/road3.csv', 'C:/Users/Rob/Desktop/GIS_thesis/01_thesis_data/02_temp/02_road/road_aggregate/road4.csv', 'C:/Users/Rob/Desktop/GIS_thesis/01_thesis_data/02_temp/02_road/road_aggregate/road5.csv', 'C:/Users/Rob/Desktop/GIS_thesis/01_thesis_data/02_temp/02_road/road_aggregate/road6.csv', 'C:/Users/Rob/Desktop/GIS_thesis/01_thesis_data/02_temp/02_road/road_aggregate/road7.csv'],\
+'CRS':None,'OUTPUT':'C:/Users/Rob/Dropbox/My PC (DESKTOP-DP7OCOF)/Desktop/GIS_thesis/01_thesis_data/02_temp/01_NTL/grid_observations/NTL_road_merged.csv'})
+
+#to do
+#automate directory thing using pathlib Path (see 06_roads_pca

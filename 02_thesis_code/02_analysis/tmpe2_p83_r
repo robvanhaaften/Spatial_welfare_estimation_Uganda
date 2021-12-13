@@ -1,0 +1,163 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Sep 17 16:43:26 2021
+
+analysis 1
+
+1. Univariate regressions for all input varaibles 
+store results to compare 
+
+@author: Rob
+"""
+import pandas as pd
+import matplotlib.pyplot as plt
+import statsmodels.formula.api as sm
+from statsmodels.iolib.summary2 import summary_col
+import seaborn as sns
+import numpy as np
+
+# apply theme for plots 
+sns.set_theme()
+sns.set_style("whitegrid")
+
+
+# import the dataset 
+data = pd.read_csv(r"C:\Users\Rob\Desktop\GIS_thesis\01_thesis_data\03_output\01_analysis1\data_analysis1_standardized.csv", index_col = "cluster")
+
+# 1. Univariate regressions for all input varaibles 
+
+# make list of independent variables names to make regression formulas 
+variables= list(data)[2:]
+
+# make dictionary to store results 
+results = {}
+
+# loop over variable list, regress on the wealth index, make plots, and store results 
+for var in variables:    
+    # make regresion formula and run regression 
+    formula = str("wi ~ %s" %(var))
+    reg = sm.ols(formula = formula, data = data).fit() 
+    
+    # print results andmake scattor plot
+    print(str(var) + "\t\t"+ str(reg.rsquared))
+    #plt.scatter(data["wi"], data[var])
+    #plt.title(str(var) + "  R-squared = " + str(reg.rsquared))
+    #plt.figure()
+
+    # generates results dictionary with var name, scale, r-squared and slope 
+    results[var] = [var.split(sep = "_")[0]]
+    results[var] += [var.split(sep = "_")[2]]
+    results[var] += [round(reg.rsquared, 2)]
+        
+    
+# fix results and save to csv 
+results = pd.DataFrame.from_dict(results, orient ="index", columns =  ["Variable", "Grid size", "R-squared"])
+
+# organize result dictionary ???!!!???
+#results.pivot_table(index = ["variable","grid_size"],  columns = ["r_squared"])
+
+# export results dictionary to csv file 
+results.to_csv(r'C:\Users\Rob\Dropbox\My PC (DESKTOP-DP7OCOF)\Desktop\GIS_thesis\01_thesis_data\03_output\Tables\grid_size_analysis.csv') 
+
+
+"""
+
+For aridity and ntl the grid sizes do not seem to have much effect on the r-squared of the model
+For road length it is clear that the 3km grid size explains most variation with 0.56 for 3 KM and 0.51 for 7
+So we proceed with the 3 km grid size for the combined model 
+
+"""
+
+
+# make dataframe with wealth index and 3 km observations 
+data_3km = data[["wi", "ntl_mean_3", "road_length_3", "aridity_mean_3"]]
+
+
+
+# make plots for results section for NTL, roads agg and aridity adj. 
+
+# ntl
+sns.regplot(x='wi', y='ntl_mean_3', data=data)
+plt.ylabel("nighttime light")
+plt.xlabel("wealth index")
+plt.figure()
+plt.savefig(r"C:\Users\Rob\Dropbox\My PC (DESKTOP-DP7OCOF)\Desktop\GIS_thesis\01_thesis_data\03_output\graphs\Figure1.png", optimize=True)
+
+# road 
+sns.regplot(x='wi', y='road_length_3', data=data)
+plt.ylabel("road length")
+plt.xlabel("wealth index")
+plt.figure()
+
+# aridity 
+sns.regplot(x='wi', y='aridity_mean_3', data=data)
+plt.ylabel("ardity index")
+plt.xlabel("wealth index")
+
+
+
+
+# make regression output tables 
+
+# fix variable names 
+reg_out_data = data_3km.copy()
+reg_out_data.rename(columns = {
+    
+    "wi"                : "Wealth_index", 
+    "ntl_mean_3"        : "Nighttime_light", 
+    "road_length_3"     : "Road_length", 
+    "aridity_mean_3"    : "Adjusted_aridity_index"
+    
+    }, inplace=True)
+
+# conduct regressions with fixed variable names 
+reg_ntl = reg = sm.ols(formula = "Wealth_index ~ Nighttime_light", data = reg_out_data).fit()
+
+reg_road = reg = sm.ols(formula = "Wealth_index ~ Road_length", data = reg_out_data).fit()
+
+reg_aridity = reg = sm.ols(formula = "Wealth_index ~ Adjusted_aridity_index", data = reg_out_data).fit()
+
+# make combined model regressing 3 kilometer observations on the wealth index 
+reg_combined = sm.ols(formula = "Wealth_index ~ Nighttime_light + Road_length + Adjusted_aridity_index", data = reg_out_data).fit()
+
+
+
+# make output summary for the three univariate regressions and the combined model 
+reg_out = summary_col([reg_ntl, reg_road, reg_aridity, reg_combined],stars=True,float_format='%0.3f', model_names=["Nighttime light", "Road length", "Adjusted aridity index", "Combined model"],info_dict={"N":lambda x: "{0:d}".format(int(x.nobs))},regressor_order= ["Intercept", "Nighttime_light", "Road_length", "Adjusted_aridity_index"])
+
+print(reg_out)
+
+# convert regression summaries to table and save that table to csv
+reg_out_table = reg_out.tables 
+reg_out_table[0].to_csv(r"C:\Users\Rob\Dropbox\My PC (DESKTOP-DP7OCOF)\Desktop\GIS_thesis\01_thesis_data\03_output\tables\regression_analysis1.csv")
+
+# save model data for analysis 3
+reg_out_data.to_csv(r"C:\Users\Rob\Dropbox\My PC (DESKTOP-DP7OCOF)\Desktop\GIS_thesis\01_thesis_data\03_output\01_analysis1\dhs_ntl_road_aridity_3km.csv")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
