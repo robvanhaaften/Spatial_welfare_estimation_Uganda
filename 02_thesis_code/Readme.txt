@@ -1,4 +1,4 @@
-This folder contains all the scripts used for my MSc thesis
+This repository contains all the scripts used for my MSc thesis.
 
 Titel: Spatial welfare estimation in Uganda: Combining nighttime lights, road networks, and aridity for welfare mapping in Uganda 
 
